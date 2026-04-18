@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gather × First Citizens Bank | AI Research Results Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --mars-blue: #003DA5;
+  --mars-red: #C8102E;
+  --teal: #0ABAB5;
+  --deep: #0A1E33;
+  --gold: #F5A623;
+  --coral: #FF6B6B;
+  --violet: #7C5CFC;
+  --surface: #F4F5F7;
+  --card: #FFFFFF;
+  --text: #0F1A2A;
+  --text2: #556377;
+  --border: rgba(15,26,42,0.07);
+  --sh: 0 1px 3px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.06);
+  --sh-hover: 0 4px 32px rgba(0,0,0,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);-webkit-font-smoothing:antialiased;}
+
+/* ═══ HERO ═══ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;
+  background:var(--deep);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 55% 55% at 75% 25%, rgba(200,16,46,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 50% at 25% 75%, rgba(10,186,181,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 30% at 50% 50%, rgba(124,92,252,0.06) 0%, transparent 50%);
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, black 10%, transparent 80%);
+}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:140px 48px 100px;width:100%;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.07);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);border-radius:100px;
+  padding:7px 18px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;
+  animation:fadeUp .7s ease both;
+}
+.hero-badge .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
+.hero h1{
+  font-family:'Fraunces',serif;font-size:clamp(38px,5.2vw,68px);font-weight:700;
+  line-height:1.08;color:#fff;max-width:800px;margin-bottom:20px;
+  animation:fadeUp .7s ease .1s both;
+}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:18px;line-height:1.65;color:rgba(255,255,255,0.6);max-width:540px;margin-bottom:44px;animation:fadeUp .7s ease .2s both;}
+.hero-stats{display:flex;gap:44px;animation:fadeUp .7s ease .3s both;}
+.hero-stat .num{font-family:'Fraunces',serif;font-size:34px;font-weight:700;color:#fff;}
+.hero-stat .lbl{font-size:12px;color:rgba(255,255,255,0.45);margin-top:3px;letter-spacing:.3px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ SECTIONS ═══ */
+section{padding:88px 48px;}
+.container{max-width:1200px;margin:0 auto;}
+.s-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.s-title{font-family:'Fraunces',serif;font-size:clamp(26px,3.2vw,40px);font-weight:700;line-height:1.15;margin-bottom:12px;}
+.s-desc{font-size:16px;line-height:1.65;color:var(--text2);max-width:600px;margin-bottom:48px;}
+
+/* ═══ STUDY SECTIONS ═══ */
+.study-section{border-bottom:1px solid var(--border);}
+.study-section:nth-child(odd){background:var(--surface);}
+.study-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:36px;}
+.study-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.study-header h2{font-family:'Fraunces',serif;font-size:28px;font-weight:700;line-height:1.2;}
+.study-header .study-tag{font-size:12px;font-weight:600;color:var(--teal);letter-spacing:.5px;margin-top:4px;}
+.study-intro{font-size:15px;line-height:1.7;color:var(--text2);max-width:700px;margin-bottom:40px;}
+
+/* ═══ DATA CARDS & GRIDS ═══ */
+.data-grid{display:grid;gap:24px;}
+.data-grid.g2{grid-template-columns:1fr 1fr;}
+.data-grid.g3{grid-template-columns:1fr 1fr 1fr;}
+.data-grid.g4{grid-template-columns:1fr 1fr 1fr 1fr;}
+
+.card{
+  background:var(--card);border-radius:16px;padding:28px 24px;
+  border:1px solid var(--border);transition:transform .3s, box-shadow .3s;
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-hover);}
+.card-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);opacity:.6;margin-bottom:12px;}
+.card h4{font-size:15px;font-weight:600;margin-bottom:4px;}
+
+/* chart containers */
+.chart-wrap{position:relative;width:100%;aspect-ratio:16/10;}
+.chart-wrap canvas{width:100%!important;height:100%!important;}
+.chart-wrap-sq{position:relative;width:100%;aspect-ratio:1/1;}
+.chart-wrap-sq canvas{width:100%!important;height:100%!important;}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.kpi{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center;}
+.kpi .val{font-family:'Fraunces',serif;font-size:28px;font-weight:700;}
+.kpi .lbl{font-size:11px;color:var(--text2);margin-top:2px;letter-spacing:.3px;}
+
+/* Verbatim quotes */
+.verbatim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;}
+.verbatim{
+  background:var(--card);border-radius:12px;padding:20px 22px;
+  border-left:3px solid var(--teal);border-top:1px solid var(--border);
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  font-size:14px;line-height:1.6;color:var(--text);font-style:italic;
+}
+.verbatim .v-meta{font-style:normal;font-size:11px;color:var(--text2);margin-top:8px;font-weight:600;}
+
+/* Perceptual map */
+.perceptual-map{
+  position:relative;width:100%;aspect-ratio:1.4/1;
+  background:var(--card);border-radius:16px;border:1px solid var(--border);
+  overflow:hidden;
+}
+.pm-axis-x,.pm-axis-y{position:absolute;background:var(--border);}
+.pm-axis-x{width:80%;height:1px;top:50%;left:10%;}
+.pm-axis-y{width:1px;height:80%;top:10%;left:50%;}
+.pm-label{position:absolute;font-size:10px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;}
+.pm-label.top{top:6%;left:50%;transform:translateX(-50%);}
+.pm-label.bottom{bottom:6%;left:50%;transform:translateX(-50%);}
+.pm-label.left{left:4%;top:50%;transform:translateY(-50%) rotate(-90deg);}
+.pm-label.right{right:4%;top:50%;transform:translateY(-50%) rotate(90deg);}
+.pm-dot{
+  position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff;cursor:default;
+  transition:transform .3s;
+}
+.pm-dot:hover{transform:scale(1.15);}
+.pm-dot-label{
+  position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-size:10px;font-weight:600;color:var(--text);
+}
+
+/* Occasion heatmap */
+.heatmap-table{width:100%;border-collapse:separate;border-spacing:3px;margin-top:16px;}
+.heatmap-table th{font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;padding:8px 6px;text-align:center;}
+.heatmap-table th:first-child{text-align:left;}
+.heatmap-table td{text-align:center;padding:10px 6px;border-radius:8px;font-size:12px;font-weight:600;color:#fff;min-width:60px;}
+.heatmap-table td:first-child{text-align:left;color:var(--text);font-weight:500;background:transparent!important;font-size:13px;}
+
+/* Bar list */
+.bar-list{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+.bar-item{display:flex;align-items:center;gap:12px;}
+.bar-item .bar-label{font-size:13px;font-weight:500;width:140px;flex-shrink:0;text-align:right;}
+.bar-track{flex:1;height:24px;background:var(--surface);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;transition:width 1s ease;}
+
+/* Segment tags */
+.seg-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.seg-tag{font-size:11px;font-weight:600;padding:5px 14px;border-radius:100px;background:rgba(10,186,181,0.08);color:var(--teal);border:1px solid rgba(10,186,181,0.15);}
+
+/* ═══ ADVANTAGE ═══ */
+.adv-section{background:var(--deep);color:#fff;position:relative;overflow:hidden;}
+.adv-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 80% 50%, rgba(10,186,181,0.06) 0%, transparent 70%);}
+.adv-section .s-title{color:#fff;}
+.adv-section .s-desc{color:rgba(255,255,255,0.55);}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;position:relative;}
+.adv-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:28px 24px;backdrop-filter:blur(8px);transition:background .3s,border-color .3s;}
+.adv-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(10,186,181,0.25);}
+.adv-card .adv-n{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--teal);margin-bottom:10px;}
+.adv-card h4{font-size:15px;font-weight:600;margin-bottom:6px;}
+.adv-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,0.5);}
+
+/* ═══ CTA ═══ */
+.cta{text-align:center;padding:88px 48px;background:var(--surface);}
+.cta .s-title{max-width:550px;margin:0 auto 12px;}
+.cta .s-desc{max-width:440px;margin:0 auto 36px;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--mars-blue),var(--teal));
+  color:#fff;font-size:15px;font-weight:600;padding:14px 32px;
+  border-radius:100px;text-decoration:none;border:none;cursor:pointer;
+  font-family:inherit;transition:transform .3s,box-shadow .3s;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,61,165,0.25);}
+.cta-btn svg{width:16px;height:16px;}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  section{padding:64px 20px;}
+  .hero-inner{padding:100px 20px 60px;}
+  .data-grid.g2,.data-grid.g3,.data-grid.g4{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
+  .verbatim-grid{grid-template-columns:1fr;}
+  .adv-grid{grid-template-columns:1fr;}
+  .hero-stats{flex-wrap:wrap;gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> First Citizens Bank Marketing Team · Research Preview</div>
+    <h1>What <em>real results</em> look like from Gather</h1>
+    <p class="hero-sub">These are synthetic results generated to preview the kind of insight, depth, and deliverables Gather produces for community banking — understanding how personal and business customers choose, switch, and stay loyal across checking, lending, and wealth management.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">5 studies</div><div class="lbl">Scoped for First Citizens Bank</div></div>
+      <div class="hero-stat"><div class="num">n=300–500</div><div class="lbl">Per study</div></div>
+      <div class="hero-stat"><div class="num">7 days</div><div class="lbl">Kick-off to delivery</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY 1: CONCEPT TESTING — CHECKING ACCOUNT SUITE
+     ═══════════════════════════════════════════════════ -->
+<section class="study-section" style="background:var(--surface);">
+  <div class="container">
+    <div class="study-header">
+      <div class="study-icon" style="background:rgba(0,61,165,0.08);">🧪</div>
+      <div>
+        <h2>Checking Account Messaging Concept Test</h2>
+        <div class="study-tag">Product Messaging & Value Prop Validation · n=347 · 4 Concepts Tested</div>
+      </div>
+    </div>
+    <p class="study-intro">Four messaging concepts for First Citizens' checking account suite — Vantage Checking, Platinum Checking, No Hassle Checking, and Student Checking — were evaluated via conversational concept test. Respondents engaged in adaptive dialogue probing initial reactions, perceived value, switching triggers, and competitive framing against offerings from Truist, Wells Fargo, and local credit unions.</p>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi"><div class="val" style="color:var(--mars-blue);">74%</div><div class="lbl">Top Concept Appeal</div></div>
+      <div class="kpi"><div class="val" style="color:var(--teal);">4.1/5</div><div class="lbl">Avg. Switching Intent</div></div>
+      <div class="kpi"><div class="val" style="color:var(--gold);">58%</div><div class="lbl">Would Consider Opening</div></div>
+      <div class="kpi"><div class="val" style="color:var(--coral);">3,124</div><div class="lbl">Verbatim Responses</div></div>
+    </div>
+
+    <div class="data-grid g2">
+      <!-- Concept Scorecard Chart -->
+      <div class="card">
+        <div class="card-label">Concept Scorecard — Messaging Appeal</div>
+        <div class="chart-wrap"><canvas id="c1_concept"></canvas></div>
+      </div>
+      <!-- Switching Intent by Concept -->
+      <div class="card">
+        <div class="card-label">Account Opening Intent Distribution</div>
+        <div class="chart-wrap"><canvas id="c1_intent"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Barrier Analysis -->
+    <div class="card" style="margin-top:24px;">
+      <div class="card-label">Top Switching Barriers (% of Respondents Citing)</div>
+      <div class="bar-list">
+        <div class="bar-item"><span class="bar-label">Direct deposit hassle</span><div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--mars-red);">52%</div></div></div>
+        <div class="bar-item"><span class="bar-label">Fee uncertainty</span><div class="bar-track"><div class="bar-fill" style="width:41%;background:var(--coral);">41%</div></div></div>
+        <div class="bar-item"><span class="bar-label">Branch proximity</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--gold);">33%</div></div></div>
+        <div class="bar-item"><span class="bar-label">Current bank loyalty</span><div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--teal);">27%</div></div></div>
+        <div class="bar-item"><span class="bar-label">Digital app quality</span><div class="bar-track"><div class="bar-fill" style="width:19%;background:var(--violet);">19%</div></div></div>
+      </div>
+    </div>
+
+    <!-- Verbatims -->
+    <div class="verbatim-grid">
+      <div class="verbatim">"The 'No Hassle' name alone makes me curious. Every other bank buries their fees in fine print — if this truly has no hidden costs, just say that upfront."<div class="v-meta">— Female, 34, No Hassle Checking Concept</div></div>
+      <div class="verbatim">"Platinum Checking sounds premium but I'd need to see what I'm getting that Truist's Wealth Checking doesn't already give me. Rate on the money market matters."<div class="v-meta">— Male, 52, Platinum Checking Concept</div></div>
+      <div class="verbatim">"For a student account, I don't care about checks. I need Zelle, no minimum balance, and an app that doesn't look like it was built in 2010."<div class="v-meta">— Female, 20, Student Checking Concept</div></div>
+      <div class="verbatim">"I'd switch from Wells Fargo tomorrow if someone made it easy. The problem isn't finding a better bank — it's surviving the two weeks of autopay chaos."<div class="v-meta">— Male, 38, Vantage Checking Concept</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY 2: BRAND SENTIMENT & COMPETITIVE TRACKING
+     ═══════════════════════════════════════════════════ -->
+<section class="study-section">
+  <div class="container">
+    <div class="study-header">
+      <div class="study-icon" style="background:rgba(200,16,46,0.08);">💬</div>
+      <div>
+        <h2>Brand Sentiment & Competitive Tracker</h2>
+        <div class="study-tag">Community Banking Perception & Trust Equity · n=487 · 8 Institutions Tracked</div>
+      </div>
+    </div>
+    <p class="study-intro">Consumers described their banking relationships through projective exercises, spontaneous word association, and competitive trade-off scenarios. First Citizens Bank was evaluated against Truist, Wells Fargo, Bank of America, State Employees' Credit Union (SECU), Navy Federal, local credit unions, and Ally Bank to understand trust dynamics and emotional positioning.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="val" style="color:var(--teal);">+37</div><div class="lbl">FCCB Net Sentiment</div></div>
+      <div class="kpi"><div class="val" style="color:var(--mars-blue);">+44</div><div class="lbl">SECU Net Sentiment</div></div>
+      <div class="kpi"><div class="val" style="color:var(--gold);">+11</div><div class="lbl">Truist Net Sentiment</div></div>
+      <div class="kpi"><div class="val" style="color:var(--coral);">3.2×</div><div class="lbl">Richer vs. Survey Data</div></div>
+    </div>
+
+    <div class="data-grid g2">
+      <!-- Perceptual Map -->
+      <div class="card">
+        <div class="card-label">Perceptual Map — Banking Competitive Landscape</div>
+        <div class="perceptual-map" id="c2_percMap">
+          <div class="pm-axis-x"></div>
+          <div class="pm-axis-y"></div>
+          <div class="pm-label top">High Trust</div>
+          <div class="pm-label bottom">Low Trust</div>
+          <div class="pm-label left">Traditional</div>
+          <div class="pm-label right">Digital-Forward</div>
+        </div>
+      </div>
+      <!-- Emotional Territory -->
+      <div class="card">
+        <div class="card-label">Emotional Territory Ownership</div>
+        <div class="chart-wrap"><canvas id="c2_emotion"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Sentiment Over Time -->
+    <div class="card" style="margin-top:24px;">
+      <div class="card-label">Sentiment Trend — Quarterly Narrative Shift (Indexed)</div>
+      <div class="chart-wrap"><canvas id="c2_trend"></canvas></div>
+    </div>
+
+    <div class="verbatim-grid">
+      <div class="verbatim">"First Citizens feels like the bank my parents took me to as a kid. That's both its strength and its weakness — I trust them, but I wonder if they're keeping up."<div class="v-meta">— Female, 31, Brand Personification</div></div>
+      <div class="verbatim">"Truist lost my trust after the merger. My old BB&T branch knew my name. Now I'm a number in a call center queue."<div class="v-meta">— Male, 47, Competitive Trade-off</div></div>
+      <div class="verbatim">"If a community bank could give me the mobile experience of Ally or Chime, I'd switch in a heartbeat. I want both — personal service AND good tech."<div class="v-meta">— Female, 28, Spontaneous Association</div></div>
+      <div class="verbatim">"The credit union gives me great rates but terrible hours. First Citizens is open on Saturday and that alone keeps me there."<div class="v-meta">— Male, 42, Projective Exercise</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY 3: OCCASION & USAGE MAPPING — BANKING MOMENTS
+     ═══════════════════════════════════════════════════ -->
+<section class="study-section" style="background:var(--surface);">
+  <div class="container">
+    <div class="study-header">
+      <div class="study-icon" style="background:rgba(245,166,35,0.08);">🗺️</div>
+      <div>
+        <h2>Banking Occasion & Need-State Mapping</h2>
+        <div class="study-tag">Demand Space Discovery · n=412 · 1,183 Banking Moments Captured</div>
+      </div>
+    </div>
+    <p class="study-intro">Respondents walked through recent real banking moments in dialogue form — from opening a checking account, to applying for a mortgage, to dealing with a fraud alert. Our AI moderator probed on context, emotional state, channel choice, and satisfaction — surfacing 12 distinct demand spaces including 3 emergent need-states not captured in traditional banking segmentation.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="val" style="color:var(--gold);">12</div><div class="lbl">Demand Spaces Identified</div></div>
+      <div class="kpi"><div class="val" style="color:var(--teal);">3 new</div><div class="lbl">Emergent Need-States</div></div>
+      <div class="kpi"><div class="val" style="color:var(--mars-blue);">68%</div><div class="lbl">Start on Mobile</div></div>
+      <div class="kpi"><div class="val" style="color:var(--coral);">1,183</div><div class="lbl">Moments Captured</div></div>
+    </div>
+
+    <!-- Heatmap -->
+    <div class="card">
+      <div class="card-label">Banking Activity Heatmap — Frequency × Channel</div>
+      <table class="heatmap-table" id="c3_heatmap"></table>
+    </div>
+
+    <!-- Demand Space Chart + Whitespace -->
+    <div class="data-grid g2" style="margin-top:24px;">
+      <div class="card">
+        <div class="card-label">Top Demand Spaces by Frequency</div>
+        <div class="chart-wrap"><canvas id="c3_demand"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Whitespace Opportunities</div>
+        <div style="margin-top:8px;">
+          <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:16px 18px;margin-bottom:12px;">
+            <h4 style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;">🔥 "Life-Stage Navigator"</h4>
+            <p style="font-size:13px;line-height:1.55;color:var(--text2);">Consumers approaching major milestones — first home, new business, retirement — want proactive guidance, not product pitches. 73% said their bank never reached out before a life event. FCCB's relationship model is perfectly positioned here but lacks a trigger system. <strong>Est. 2,400 new mortgage/loan conversations per year.</strong></p>
+          </div>
+          <div style="background:rgba(10,186,181,0.06);border:1px solid rgba(10,186,181,0.15);border-radius:12px;padding:16px 18px;margin-bottom:12px;">
+            <h4 style="font-size:14px;font-weight:700;color:var(--teal);margin-bottom:4px;">⚡ "Small Business After-Hours"</h4>
+            <p style="font-size:13px;line-height:1.55;color:var(--text2);">Small business owners do financial management after 8pm. They need real-time cash flow visibility and next-day deposit confirmation. 61% say their bank is "asleep" when they work. <strong>Est. 18% deposit growth from improved digital cash management tools.</strong></p>
+          </div>
+          <div style="background:rgba(124,92,252,0.06);border:1px solid rgba(124,92,252,0.15);border-radius:12px;padding:16px 18px;">
+            <h4 style="font-size:14px;font-weight:700;color:var(--violet);margin-bottom:4px;">🎓 "Financial Confidence Builder"</h4>
+            <p style="font-size:13px;line-height:1.55;color:var(--text2);">Younger customers want to feel smart about money, not sold to. They gravitate toward banks that educate — FCCB Academy is an untapped differentiator that fewer than 12% of prospects are aware of. <strong>Est. 35% increase in Student/Budget Checking acquisition with promotion.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verbatim-grid">
+      <div class="verbatim">"I applied for my mortgage at 11pm on a Tuesday because that's when I finally had time to sit down. The bank's hours don't match my life."<div class="v-meta">— Female, 36, Mortgage Application Moment</div></div>
+      <div class="verbatim">"When I started my bakery, I needed someone to walk me through business checking options in plain English. My credit union acted like I should already know everything."<div class="v-meta">— Male, 29, Small Business Occasion</div></div>
+      <div class="verbatim">"I check my balance six times a day. It's not because I'm worried — it's because the app makes me feel in control. Banks that make that feel good win."<div class="v-meta">— Female, 24, Daily Banking Moment</div></div>
+      <div class="verbatim">"My dad banked at First Citizens his whole life. When I graduated, nobody there reached out. I opened a Chime account because they sent me a TikTok ad."<div class="v-meta">— Male, 22, Life-Stage Transition</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY 4: MILLENNIAL & GEN Z BANKING ACQUISITION
+     ═══════════════════════════════════════════════════ -->
+<section class="study-section">
+  <div class="container">
+    <div class="study-header">
+      <div class="study-icon" style="background:rgba(10,186,181,0.08);">⚡</div>
+      <div>
+        <h2>Millennial & Gen Z Banking Acquisition</h2>
+        <div class="study-tag">Next-Gen Depositor Preference Architecture · n=338 · Ages 18–38</div>
+      </div>
+    </div>
+    <p class="study-intro">Mobile-first conversational interviews designed to understand how younger consumers choose, open, and stay with a bank. 3× higher completion rate than traditional surveys in this demographic. Respondents engaged with brand sorts, digital experience evaluations, and scenario-based switching simulations comparing First Citizens against neobanks like Chime, SoFi, and Ally alongside regional competitors.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="val" style="color:var(--teal);">91%</div><div class="lbl">Completion Rate</div></div>
+      <div class="kpi"><div class="val" style="color:var(--violet);">17.8 min</div><div class="lbl">Avg. Engagement</div></div>
+      <div class="kpi"><div class="val" style="color:var(--gold);">54%</div><div class="lbl">Open to Community Bank</div></div>
+      <div class="kpi"><div class="val" style="color:var(--mars-red);">73%</div><div class="lbl">App Quality = Dealbreaker</div></div>
+    </div>
+
+    <div class="data-grid g2">
+      <div class="card">
+        <div class="card-label">Bank Discovery Channels — Under 38</div>
+        <div class="chart-wrap"><canvas id="c4_discovery"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Decision Driver Resonance</div>
+        <div class="chart-wrap"><canvas id="c4_drivers"></canvas></div>
+      </div>
+    </div>
+
+    <div class="data-grid g2" style="margin-top:24px;">
+      <div class="card">
+        <div class="card-label">Brand Consideration Index — Under 38</div>
+        <div class="bar-list" style="margin-top:0;">
+          <div class="bar-item"><span class="bar-label">Chime</span><div class="bar-track"><div class="bar-fill" style="width:79%;background:var(--teal);">79</div></div></div>
+          <div class="bar-item"><span class="bar-label">SECU</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--teal);">72</div></div></div>
+          <div class="bar-item"><span class="bar-label">Ally Bank</span><div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--mars-blue);">68</div></div></div>
+          <div class="bar-item"><span class="bar-label">First Citizens</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:var(--mars-blue);">54</div></div></div>
+          <div class="bar-item"><span class="bar-label">Truist</span><div class="bar-track"><div class="bar-fill" style="width:47%;background:var(--text2);">47</div></div></div>
+          <div class="bar-item"><span class="bar-label">Wells Fargo</span><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--text2);">38</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">What Under-38s Say About First Citizens</div>
+        <div class="seg-row" style="margin-top:0;margin-bottom:16px;">
+          <span class="seg-tag">Trustworthy</span>
+          <span class="seg-tag">Friendly Staff</span>
+          <span class="seg-tag">Local Roots</span>
+          <span class="seg-tag" style="background:rgba(200,16,46,0.08);color:var(--mars-red);border-color:rgba(200,16,46,0.15);">Outdated App</span>
+          <span class="seg-tag" style="background:rgba(200,16,46,0.08);color:var(--mars-red);border-color:rgba(200,16,46,0.15);">My Parents' Bank</span>
+        </div>
+        <div class="verbatim" style="margin-bottom:10px;">"First Citizens is the bank I see everywhere around town but never think to walk into. They feel solid but invisible to my generation."<div class="v-meta">— Female, 26</div></div>
+        <div class="verbatim">"I banked with them as a kid because of the Student Checking. When I graduated, nothing changed — same account, same everything. They never grew with me."<div class="v-meta">— Male, 24</div></div>
+      </div>
+    </div>
+
+    <div class="verbatim-grid">
+      <div class="verbatim">"Chime got me with the early direct deposit. Two days before payday? That's a real feature. My community bank can't do that."<div class="v-meta">— Female, 27, Competitive Trade-off</div></div>
+      <div class="verbatim">"I'd 100% pick a local bank over a neobank if they had a decent app and didn't charge me $12/month for the privilege of having a checking account."<div class="v-meta">— Male, 31, Switching Scenario</div></div>
+      <div class="verbatim">"When I bought my first house, I wanted a banker I could sit across from. That's when I realized neobanks can't do everything. First Citizens should market that harder."<div class="v-meta">— Female, 33, Life-Stage Moment</div></div>
+      <div class="verbatim">"SoFi sent me a personalized savings plan. My bank sends me paper statements. The gap isn't trust — it's effort."<div class="v-meta">— Male, 25, Digital Experience</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STUDY 5: MORTGAGE & HOME LENDING JOURNEY
+     ═══════════════════════════════════════════════════ -->
+<section class="study-section" style="background:var(--surface);">
+  <div class="container">
+    <div class="study-header">
+      <div class="study-icon" style="background:rgba(124,92,252,0.08);">🏠</div>
+      <div>
+        <h2>Mortgage & Home Lending Decision Journey</h2>
+        <div class="study-tag">Borrower Psychographics & Journey Mapping · n=421 · 4 Borrower Archetypes Identified</div>
+      </div>
+    </div>
+    <p class="study-intro">Prospective and recent homebuyers engaged in 20+ minute conversations about their mortgage decision journey — from initial research through closing. Response lengths were 1.8× longer than our financial services benchmark. Four distinct borrower archetypes emerged with clear implications for First Citizens' in-house mortgage lending, first-time homebuyer grants, and Home Equity Loan positioning.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="val" style="color:var(--violet);">4</div><div class="lbl">Borrower Archetypes</div></div>
+      <div class="kpi"><div class="val" style="color:var(--teal);">21 min</div><div class="lbl">Avg. Conversation</div></div>
+      <div class="kpi"><div class="val" style="color:var(--gold);">67%</div><div class="lbl">Consider Local Lender</div></div>
+      <div class="kpi"><div class="val" style="color:var(--mars-red);">#3</div><div class="lbl">FCCB Consideration Rank</div></div>
+    </div>
+
+    <div class="data-grid g2">
+      <div class="card">
+        <div class="card-label">Mortgage Lender Trust Hierarchy</div>
+        <div class="chart-wrap"><canvas id="c5_trust"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Borrower Archetypes</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:rgba(124,92,252,0.06);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--violet);margin-bottom:4px;">🔍 Rate Hunters (31%)</div>
+            <p style="font-size:12px;line-height:1.5;color:var(--text2);">Compare 5+ lenders. Use Bankrate and NerdWallet obsessively. Will sacrifice relationship for 0.125% lower rate. Hardest to win but high-value if cross-sold.</p>
+          </div>
+          <div style="background:rgba(10,186,181,0.06);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;">🤝 Relationship Seekers (28%)</div>
+            <p style="font-size:12px;line-height:1.5;color:var(--text2);">Want a named human who answers the phone. Will pay slightly more for local, in-house servicing. FCCB's sweet spot — they just don't know FCCB offers this.</p>
+          </div>
+          <div style="background:rgba(245,166,35,0.06);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:4px;">😰 Overwhelmed First-Timers (24%)</div>
+            <p style="font-size:12px;line-height:1.5;color:var(--text2);">Paralyzed by complexity. Don't understand PMI, escrow, or DTI. Gravitate toward whoever simplifies first. FCCB's first-time buyer grants are nearly unknown in this group.</p>
+          </div>
+          <div style="background:rgba(200,16,46,0.06);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mars-red);margin-bottom:4px;">⚡ Speed Optimizers (17%)</div>
+            <p style="font-size:12px;line-height:1.5;color:var(--text2);">Experienced buyers who want fast pre-approval and minimal paperwork. Over-index on Rocket Mortgage and Better.com. Will abandon any process that takes more than 48 hours to respond.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journey Friction Chart -->
+    <div class="card" style="margin-top:24px;">
+      <div class="card-label">Journey Friction Points — Pain × Impact on Lender Choice</div>
+      <div class="chart-wrap"><canvas id="c5_friction"></canvas></div>
+    </div>
+
+    <div class="verbatim-grid">
+      <div class="verbatim">"I spent three weeks uploading documents to Rocket Mortgage's portal only to get a generic denial. A local banker would have told me on day one what I needed to fix."<div class="v-meta">— Male, 34, Overwhelmed First-Timer</div></div>
+      <div class="verbatim">"First Citizens has first-time buyer grants? I had no idea. I went with SECU because they marketed theirs on Instagram. That's wild — I would've considered FCCB."<div class="v-meta">— Female, 28, Rate Hunter</div></div>
+      <div class="verbatim">"I chose my mortgage lender because the loan officer called me back within an hour. That's it. Not rate, not brand — speed of response."<div class="v-meta">— Male, 41, Speed Optimizer</div></div>
+      <div class="verbatim">"The fact that First Citizens keeps the loan in-house means my payment goes to someone local. That matters to me more than a quarter point on rate."<div class="v-meta">— Female, 45, Relationship Seeker</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ADVANTAGE ═══ -->
+<section class="adv-section">
+  <div class="container">
+    <div class="s-label" style="color:var(--teal);">The Gather Advantage</div>
+    <div class="s-title">Why this is different</div>
+    <p class="s-desc">Traditional research forces a trade-off: qualitative depth or quantitative scale. Gather eliminates that trade-off.</p>
+    <div class="adv-grid">
+      <div class="adv-card"><div class="adv-n">7 days</div><h4>Speed to Insight</h4><p>From kick-off to production-ready report. No 6-week timelines.</p></div>
+      <div class="adv-card"><div class="adv-n">10×</div><h4>Signal Density</h4><p>15–20 min adaptive dialogue per respondent. Qual depth at quant scale.</p></div>
+      <div class="adv-card"><div class="adv-n">n=300+</div><h4>Stat Confidence</h4><p>Segment-level findings with quantified theme frequencies.</p></div>
+      <div class="adv-card"><div class="adv-n">AI</div><h4>Adaptive Moderation</h4><p>Every follow-up is tailored. No two conversations are the same.</p></div>
+      <div class="adv-card"><div class="adv-n">📱</div><h4>Mobile-Native</h4><p>2–3× completion rates. Respondents engage on their own time.</p></div>
+      <div class="adv-card"><div class="adv-n">📊</div><h4>Ready to Present</h4><p>Interactive dashboards. No reformatting. Walk straight into the boardroom.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta">
+  <div class="container">
+    <div class="s-label">Next Steps</div>
+    <div class="s-title">Let's scope a pilot study for First Citizens Bank</div>
+    <p class="s-desc">We recommend starting with a millennial/Gen Z acquisition study or mortgage journey deep-dive — then expanding across checking, lending, and wealth.</p>
+    <a href="mailto:jay@gatherhq.com" class="cta-btn">Let's Talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <p style="font-size:13px;color:var(--text2);margin-top:16px;">Your contact: Jay Flaherty · <a href="mailto:jay@gatherhq.com" style="color:var(--teal);">jay@gatherhq.com</a></p>
+  </div>
+</section>
+
+<script>
+// ═══ CHART.JS DEFAULTS ═══
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#556377';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.elements.bar.borderRadius = 4;
+
+const COLORS = {
+  blue:'#003DA5', red:'#C8102E', teal:'#0ABAB5', gold:'#F5A623',
+  coral:'#FF6B6B', violet:'#7C5CFC', deep:'#0A1E33', text2:'#556377'
+};
+
+// ═══ STUDY 1: CONCEPT TESTING ═══
+new Chart(document.getElementById('c1_concept'), {
+  type: 'bar',
+  data: {
+    labels: ['Vantage\nChecking', 'Platinum\nChecking', 'No Hassle\nChecking', 'Student\nChecking'],
+    datasets: [
+      {label:'Appeal', data:[71,64,74,68], backgroundColor:COLORS.blue},
+      {label:'Clarity', data:[66,58,78,72], backgroundColor:COLORS.teal},
+      {label:'Differentiation', data:[52,61,69,55], backgroundColor:COLORS.gold},
+      {label:'Switching Intent', data:[48,43,62,57], backgroundColor:COLORS.coral},
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}},x:{ticks:{font:{size:11}}}},
+    plugins:{legend:{position:'bottom'}}
+  }
+});
+
+new Chart(document.getElementById('c1_intent'), {
+  type: 'bar',
+  data: {
+    labels: ['Definitely open','Probably open','Might consider','Probably not','Definitely not'],
+    datasets: [
+      {label:'No Hassle Checking', data:[22,40,23,11,4], backgroundColor:COLORS.blue},
+      {label:'Vantage Checking', data:[16,32,28,17,7], backgroundColor:COLORS.teal},
+      {label:'Student Checking', data:[19,38,24,13,6], backgroundColor:COLORS.gold},
+    ]
+  },
+  options: {
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    scales:{x:{stacked:false,ticks:{callback:v=>v+'%'}},y:{}},
+    plugins:{legend:{position:'bottom'}}
+  }
+});
+
+// ═══ STUDY 2: BRAND SENTIMENT ═══
+// Perceptual Map dots
+const banks = [
+  {name:"First Citizens", x:38, y:30, size:42, color:COLORS.blue},
+  {name:"Truist", x:55, y:48, size:38, color:COLORS.text2},
+  {name:"Wells Fargo", x:62, y:58, size:40, color:COLORS.coral},
+  {name:"SECU", x:32, y:28, size:36, color:COLORS.teal},
+  {name:"Bank of America", x:68, y:52, size:38, color:COLORS.text2},
+  {name:"Ally Bank", x:78, y:35, size:30, color:COLORS.gold},
+  {name:"Chime", x:82, y:44, size:28, color:COLORS.violet},
+  {name:"Navy Federal", x:45, y:25, size:32, color:COLORS.deep},
+];
+const map2 = document.getElementById('c2_percMap');
+banks.forEach(b => {
+  const dot = document.createElement('div');
+  dot.className = 'pm-dot';
+  dot.style.cssText = `width:${b.size}px;height:${b.size}px;background:${b.color};left:calc(${b.x}% - ${b.size/2}px);top:calc(${b.y}% - ${b.size/2}px);`;
+  dot.innerHTML = `<span class="pm-dot-label">${b.name}</span>`;
+  map2.appendChild(dot);
+});
+
+new Chart(document.getElementById('c2_emotion'), {
+  type: 'radar',
+  data: {
+    labels: ['Trust', 'Community', 'Stability', 'Innovation', 'Accessibility', 'Empathy'],
+    datasets: [
+      {label:"First Citizens", data:[82,86,79,42,68,77], borderColor:COLORS.blue, backgroundColor:'rgba(0,61,165,0.08)', pointBackgroundColor:COLORS.blue},
+      {label:"Truist", data:[51,38,62,55,71,44], borderColor:COLORS.text2, backgroundColor:'rgba(85,99,119,0.06)', pointBackgroundColor:COLORS.text2},
+      {label:"Chime", data:[48,22,35,88,82,41], borderColor:COLORS.violet, backgroundColor:'rgba(124,92,252,0.06)', pointBackgroundColor:COLORS.violet},
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{r:{beginAtZero:true,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,0.05)'},pointLabels:{font:{size:11,weight:'600'}}}},
+    plugins:{legend:{position:'bottom'}}
+  }
+});
+
+new Chart(document.getElementById('c2_trend'), {
+  type: 'line',
+  data: {
+    labels: ['Q1 2024','Q2 2024','Q3 2024','Q4 2024','Q1 2025'],
+    datasets: [
+      {label:"First Citizens", data:[100,102,104,103,106], borderColor:COLORS.blue, backgroundColor:COLORS.blue, tension:0.3, pointRadius:4},
+      {label:"SECU", data:[100,101,103,106,108], borderColor:COLORS.teal, backgroundColor:COLORS.teal, tension:0.3, pointRadius:4},
+      {label:"Truist", data:[100,96,93,91,89], borderColor:COLORS.text2, backgroundColor:COLORS.text2, tension:0.3, pointRadius:4},
+      {label:"Chime", data:[100,108,112,115,118], borderColor:COLORS.violet, backgroundColor:COLORS.violet, tension:0.3, pointRadius:4},
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{y:{min:82,max:125,ticks:{callback:v=>v}},x:{}},
+    plugins:{legend:{position:'bottom'}}
+  }
+});
+
+// ═══ STUDY 3: OCCASION HEATMAP ═══
+const heatData = {
+  rows: ['Balance check / transfer','Bill pay / autopay','Loan research','Branch visit','Mobile deposit','Customer service call','Investment review','Mortgage inquiry'],
+  cols: ['Mobile App','Online Banking','In-Branch','Phone','ATM','Third-Party'],
+  vals: [
+    [88,72,12,8,42,18],
+    [68,82,8,14,5,22],
+    [74,78,35,18,2,62],
+    [6,12,86,28,4,8],
+    [82,15,18,4,22,3],
+    [12,18,42,78,2,6],
+    [38,52,55,22,1,28],
+    [62,71,48,32,1,44],
+  ]
+};
+const ht3 = document.getElementById('c3_heatmap');
+let thead3 = '<tr><th></th>';
+heatData.cols.forEach(c => thead3 += `<th>${c}</th>`);
+thead3 += '</tr>';
+let tbody3 = '';
+heatData.rows.forEach((r,i) => {
+  tbody3 += `<tr><td>${r}</td>`;
+  heatData.vals[i].forEach(v => {
+    const alpha = Math.max(0.15, v/100);
+    const bg = v > 65 ? `rgba(0,61,165,${alpha})` : v > 40 ? `rgba(245,166,35,${alpha})` : `rgba(10,186,181,${alpha})`;
+    tbody3 += `<td style="background:${bg};">${v}%</td>`;
+  });
+  tbody3 += '</tr>';
+});
+ht3.innerHTML = thead3 + tbody3;
+
+new Chart(document.getElementById('c3_demand'), {
+  type: 'bar',
+  data: {
+    labels: ['Daily balance\ncheck','Bill pay &\ntransfer','Loan/rate\nresearch','Life-stage\nplanning','Fraud/security\nalert','Branch\nconsult','Investment\nreview','Small biz\ncash mgmt'],
+    datasets: [{
+      data: [86,78,71,64,58,52,44,41],
+      backgroundColor: [COLORS.blue, COLORS.blue, COLORS.teal, COLORS.gold, COLORS.coral, COLORS.violet, '#8B9DAF', '#8B9DAF'],
+    }]
+  },
+  options: {
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    scales:{x:{beginAtZero:true,ticks:{callback:v=>v+'%'}},y:{ticks:{font:{size:11}}}},
+    plugins:{legend:{display:false}}
+  }
+});
+
+// ═══ STUDY 4: MILLENNIAL & GEN Z ═══
+new Chart(document.getElementById('c4_discovery'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Friend / Family','Google Search','Social Media Ad','In-Store / Branch','Influencer / TikTok','NerdWallet / Bankrate','Other'],
+    datasets: [{
+      data: [28,22,18,13,9,7,3],
+      backgroundColor: [COLORS.teal, COLORS.deep, COLORS.coral, COLORS.gold, COLORS.violet, COLORS.blue, '#ccc'],
+      borderWidth: 2, borderColor: '#fff',
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    cutout:'55%',
+    plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}
+  }
+});
+
+new Chart(document.getElementById('c4_drivers'), {
+  type: 'bar',
+  data: {
+    labels: ['No hidden fees','App quality','High-yield savings','Local branches','Fast support','Rewards / cashback','Brand reputation'],
+    datasets: [
+      {label:'Importance Score', data:[89,84,78,62,71,66,43], backgroundColor:COLORS.teal},
+      {label:'FCCB Perceived Fit', data:[64,38,42,81,72,28,67], backgroundColor:COLORS.blue},
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{y:{beginAtZero:true,max:100},x:{ticks:{font:{size:10}}}},
+    plugins:{legend:{position:'bottom'}}
+  }
+});
+
+// ═══ STUDY 5: MORTGAGE JOURNEY ═══
+new Chart(document.getElementById('c5_trust'), {
+  type: 'bar',
+  data: {
+    labels: ["Local Credit Union","Rocket Mortgage","First Citizens","Wells Fargo","Truist","Better.com","Bank of America","SoFi"],
+    datasets: [{
+      label:'Trust Index',
+      data: [81,74,72,58,56,52,51,48],
+      backgroundColor: [COLORS.text2, COLORS.text2, COLORS.blue, COLORS.text2, COLORS.text2, COLORS.text2, COLORS.text2, COLORS.text2],
+    }]
+  },
+  options: {
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    scales:{x:{beginAtZero:true,max:100},y:{ticks:{font:{size:11}}}},
+    plugins:{legend:{display:false}}
+  }
+});
+
+new Chart(document.getElementById('c5_friction'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {label:'Slow pre-approval response', data:[{x:91,y:86}], backgroundColor:COLORS.red, pointRadius:15},
+      {label:'Document upload confusion', data:[{x:84,y:72}], backgroundColor:COLORS.gold, pointRadius:13},
+      {label:'Rate transparency', data:[{x:88,y:68}], backgroundColor:COLORS.coral, pointRadius:12},
+      {label:'Closing cost surprises', data:[{x:82,y:78}], backgroundColor:COLORS.violet, pointRadius:13},
+      {label:'Lack of human contact', data:[{x:76,y:64}], backgroundColor:COLORS.teal, pointRadius:11},
+      {label:'Loan servicing transfer', data:[{x:71,y:58}], backgroundColor:COLORS.blue, pointRadius:10},
+      {label:'Jargon overload', data:[{x:68,y:52}], backgroundColor:'#8B9DAF', pointRadius:9},
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{title:{display:true,text:'Pain Intensity →',font:{weight:'600'}},min:55,max:100},
+      y:{title:{display:true,text:'Impact on Lender Choice →',font:{weight:'600'}},min:40,max:95}
+    },
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:10},padding:10}},
+      tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: Pain ${ctx.parsed.x}, Impact ${ctx.parsed.y}`}}
+    }
+  }
+});
+</script>
+</body>
+</html>
